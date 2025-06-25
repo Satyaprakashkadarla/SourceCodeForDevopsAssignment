@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  go-service:
+    build:
+      context: ./service_1
+    ports:
+      - "8001:8001"
+    container_name: myapp-go
+
+  python-service:
+    build:
+      context: ./service_2
+    ports:
+      - "8000:8000"
+    container_name: myapp-python
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "8080:8080"
+    container_name: nginx-proxy
+    depends_on:
+      - python-service
+      - go-service
